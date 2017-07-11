@@ -99,72 +99,93 @@ class Product:
 	def billing(self):
 		total = 0
 		while 1:
-			print("enter name of product to add to cart or type exit")
-			ini = input();	
-			if ini=="exit":
-				break;
-			dat = self.search(ini)
-			if(type(dat)==list):
-				print ("the item is not available right now. Sorry for the inconvenience")
-			else:
-				print ("the price of",dat['name'],"is",dat['price'],". How much do you want?")
-			q = int(input());
-			if q>float(dat['stock']):
-				print ("there is less stock (",dat['stock'],"). Sorry for the inconvenience. Please retype the quantity you want.")
+			print("enter 1 to list out the products,\n2 to add product or any other key to exit")
+			choice = input()
+			if int(choice)==2:
+				print("enter name of product to add to cart")
+				ite = input();	
+				dat = self.search(ite)
+				if(type(dat)==list):
+					print ("the item is not available right now. Sorry for the inconvenience")
+				else:
+					print ("the price of",dat['name'],"is",dat['price'],". How much do you want?")
 				q = int(input());
-			total = total + q*float(dat['price']);
-			self.update(ini,int(dat['stock']) - q)
-		print("The total amount is",total,"Thanks for shopping");
+				if q>float(dat['stock']):
+					print ("there is less stock (",dat['stock'],"). Sorry for the inconvenience. Please retype the quantity you want.")
+					q = int(input());
+				total = total + q*float(dat['price']);
+				self.update(ite,int(dat['stock']) - q)
+			elif int(choice)==1:
+				self.display();
+			else:
+				if total!=0:
+					print("The total amount is",total,"Thanks for shopping");
+				else:
+					print("thank you");
+				break;
 
-p = Product()				
-print("Are you a customer or owner?")
-person = input()
-if(person == "customer"):
-	p.billing()
-else:
-	print("Do you want to add, delete, search or update?")
-	choice = input()
-	if choice=="add":
+def owner():
+	print(" 1 to add,\n 2 to delete,\n 3 to search,\n 4 to update")
+	choice =int( input())
+	if choice==1:
 		p.add()
-	if choice=="delete":
+	if choice==2:
 		print("enter the product to be deleted");
 		na = input()
 		p.delete(na)
 
-	if choice=="search":
-		print("Do you want to search the category or product?")
-		na = input()
-		if na=="product":
+	if choice==3:
+		print(" 1 for category,\n 2 for product?")
+		search_choice= int(input())
+		if search_choice==2:
 			print("enter the product to be searched");
 			na = input()
-			k=p.search(na)
-			if type(k)==list:
-				print("the selected item is not in stock. Do you want to add it?")
-				st = input()
-				if(st=="yes"):
+			result=p.search(na)
+			if type(result)==list:
+				print(" the selected item is not in stock. Do you want to add it?\n Y for yes,N for no")
+				user_in= input()
+				if(user_in=="Y"):
 					self.add(name);
 				else:
 					for n in FN:
 						print(n,end="\t")
-					for i in k:
-						print (k[i],end="\t")
+					for i in result:
+						print (result[i],end="\t")
 		else:
-			k=p.search()
-			if k==[]:
+			result=p.search()
+			print()
+			if result==[]:
 				print("There is no such category")
 			else:
 				for n in FN:
 					print(n,end="\t")
-				for i in k:
-					for j in i:
-						print(i[j],end=" ")
+				print()
+				for pro in result:
+					for j in FN:
+						print(pro[j],end=" ")
 					print()	
-	if choice=="update":
+	if choice==4:
 		print("enter the product name",end=" ")
 		na = input()
 		p.update(na)
 	print();
 	p.display();
+p = Product()
+switch_=1
+while(switch_):
+	switch_=0;				
+	print("1 to customer\n2 to owner")
+	person_choice = input()
+	if(int(person_choice) == 1):
+		p.billing()
+	elif (int(person_choice)==2):
+		owner()
+	else:
+		print("u have entered the wrong value.please enter correct value")
+		_switch=1
+
+	
+	
 	 
 
 	
