@@ -1,4 +1,5 @@
 import csv
+from prettytable import PrettyTable
 FN=['name','price','category','stock']
 class Product:
 	__iname=""
@@ -88,18 +89,15 @@ class Product:
 	def display(self):
 		with open("products.csv",'r') as csvf:
 			read=csv.DictReader(csvf)
-			for n in FN:
-				print(n,end="\t")
-			print();
+			table = PrettyTable(FN)
 			for row in read:
-				for n in FN:
-					print(row[n],end="\t")
-				print();	
-	
+				print(row.values());
+				table.add_row([row[x] for x in FN]);
+			print(table);
 	def billing(self):
 		total = 0
 		while 1:
-			print("enter 1 to list out the products,\n2 to add product or any other key to exit")
+			print("enter 1 to list out the products,\n2 to add product or\n3 to exit")
 			choice = input()
 			if int(choice)==2:
 				print("enter name of product to add to cart")
@@ -127,7 +125,7 @@ class Product:
 
 def owner():
 	while(1):
-		print(" 1 to add,\n 2 to delete,\n 3 to search,\n 4 to update or any other key to exit")
+		print(" 1 to add,\n 2 to delete,\n 3 to search,\n 4 to update or \n5 to exit")
 		choice =input()
 		if int(choice)==1:
 			p.add()
@@ -159,13 +157,10 @@ def owner():
 				if result==[]:
 					print("There is no such category")
 				else:
-					for n in FN:
-						print(n,end="\t")
-					print()
+					table = PrettyTable(FN)
 					for pro in result:
-						for j in FN:
-							print(pro[j],end=" ")
-						print()	
+						table.add_row([pro[x] for x in FN]);
+					print(table)
 		elif int(choice)==4:
 			print("enter the product name",end=" ")
 			na = input()
@@ -173,7 +168,7 @@ def owner():
 			print();
 		else:
 			break;
-	p.display()
+		p.display()
 	
 p = Product()
 switch_=1
