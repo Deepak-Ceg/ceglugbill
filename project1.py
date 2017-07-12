@@ -107,6 +107,7 @@ class Product:
 				dat = self.search(ite)
 				if(type(dat)==list):
 					print ("the item is not available right now. Sorry for the inconvenience")
+				
 				else:
 					print ("the price of",dat['name'],"is",dat['price'],". How much do you want?")
 				q = int(input());
@@ -125,51 +126,55 @@ class Product:
 				break;
 
 def owner():
-	print(" 1 to add,\n 2 to delete,\n 3 to search,\n 4 to update")
-	choice =int( input())
-	if choice==1:
-		p.add()
-	if choice==2:
-		print("enter the product to be deleted");
-		na = input()
-		p.delete(na)
-
-	if choice==3:
-		print(" 1 for category,\n 2 for product?")
-		search_choice= int(input())
-		if search_choice==2:
-			print("enter the product to be searched");
+	while(1):
+		print(" 1 to add,\n 2 to delete,\n 3 to search,\n 4 to update or any other key to exit")
+		choice =input()
+		if int(choice)==1:
+			p.add()
+		elif int(choice)==2:
+			print("enter the product to be deleted");
 			na = input()
-			result=p.search(na)
-			if type(result)==list:
-				print(" the selected item is not in stock. Do you want to add it?\n Y for yes,N for no")
-				user_in= input()
-				if(user_in=="Y"):
-					self.add(name);
+			p.delete(na)
+
+		elif int(choice)==3:
+			print(" 1 for category,\n 2 for product?")
+			search_choice= int(input())
+			if search_choice==2:
+				print("enter the product to be searched");
+				na = input()
+				result=p.search(na)
+				if type(result)==list:
+					print(" the selected item is not in stock. Do you want to add it?\n Y for yes,N for no")
+					user_in= input()
+					if(user_in=="Y"):
+						self.add(name);
 				else:
 					for n in FN:
 						print(n,end="\t")
 					for i in result:
 						print (result[i],end="\t")
-		else:
-			result=p.search()
-			print()
-			if result==[]:
-				print("There is no such category")
 			else:
-				for n in FN:
-					print(n,end="\t")
+				result=p.search()
 				print()
-				for pro in result:
-					for j in FN:
-						print(pro[j],end=" ")
-					print()	
-	if choice==4:
-		print("enter the product name",end=" ")
-		na = input()
-		p.update(na)
-	print();
-	p.display();
+				if result==[]:
+					print("There is no such category")
+				else:
+					for n in FN:
+						print(n,end="\t")
+					print()
+					for pro in result:
+						for j in FN:
+							print(pro[j],end=" ")
+						print()	
+		elif int(choice)==4:
+			print("enter the product name",end=" ")
+			na = input()
+			p.update(na)
+			print();
+		else:
+			break;
+	p.display()
+	
 p = Product()
 switch_=1
 while(switch_):

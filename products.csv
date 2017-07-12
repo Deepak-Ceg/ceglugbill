@@ -1,4 +1,5 @@
 name,price,category,stock
 pineapple,20,fruits,95
-guava,70,fruits,1000
+guava,70,fruits,900
 soap,34,cosmetics,90
+shampoo,75,cosmetics,500
